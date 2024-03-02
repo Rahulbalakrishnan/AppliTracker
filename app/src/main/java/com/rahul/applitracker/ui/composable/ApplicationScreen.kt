@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -63,16 +65,22 @@ fun ApplicationScreen(
         Scaffold(
             containerColor = Color.White,
             topBar = {
-                Text(
-                    text = "My Applications",
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 32.sp,
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .padding(top = 20.dp)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+
+                    ) {
+                    Text(
+                        text = "My Applications",
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 30.sp,
+                        modifier = Modifier
+                            .padding(top = 30.dp)
+                            .padding(start = 30.dp)
+                    )
+                }
+
             },
             content = {
                 Column(
@@ -102,8 +110,10 @@ fun ApplicationScreen(
                             ) {
                                 Row(
                                     modifier = Modifier
-                                        .padding(10.dp).padding(horizontal = 15.dp)
-                                        .fillMaxWidth().weight(1f),
+                                        .padding(10.dp)
+                                        .padding(horizontal = 15.dp)
+                                        .fillMaxWidth()
+                                        .weight(1f),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween
 
@@ -147,13 +157,15 @@ fun ApplicationScreen(
                                             painter = painterResource(id = R.drawable.ic_trash),
                                             contentDescription = "Trash Icon",
                                             tint = Color.Red,
-                                            modifier = Modifier.clickable {
-                                                onEvent(
-                                                    ApplicationEvent.DeleteApplication(
-                                                        application
+                                            modifier = Modifier
+                                                .clickable {
+                                                    onEvent(
+                                                        ApplicationEvent.DeleteApplication(
+                                                            application
+                                                        )
                                                     )
-                                                )
-                                            }.size(25.dp)
+                                                }
+                                                .size(25.dp)
                                         )
                                     }
                                 }
@@ -205,20 +217,23 @@ fun ApplicationDetailsScreen(
                 text = "Application Details",
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 13.sp,
+                fontSize = 20.sp,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 10.dp)
             )
         },
         text = {
 
             Column {
                 Text(
-                    text = "ID : ${application.applicationId}",
+                    text = "ID :  ${application.applicationId}",
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
                     color = Color.White,
                     modifier = Modifier.padding(2.dp)
                 )
+
                 Text(
                     text = "Applied on : ${application.date}",
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -235,32 +250,74 @@ fun ApplicationDetailsScreen(
                     color = Color.Green,
                     modifier = Modifier.padding(2.dp)
                 )
+                Spacer(modifier = Modifier.padding(vertical = 10.dp))
+                Column () {
+                    Text(
+                        text = "Company : ",
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 15.sp,
+                        color = Color.Yellow,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                    Text(
+                        text = application.companyName,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 13.sp,
+                        color = Color.White,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
+
+                Column(modifier = Modifier.padding(vertical = 5.dp)) {
+                    Text(
+                        text = "Position : ",
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 15.sp,
+                        color = Color.Yellow,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                    Text(
+                        text = application.jobPosition,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 13.sp,
+                        color = Color.White,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
+
                 Text(
-                    text = "Company : ${application.companyName}",
+                    text = "Job url:",
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight.ExtraBold,
+                    fontSize = 15.sp,
+                    color = Color.Yellow,
+                    modifier = Modifier.padding(2.dp)
+                )
+
+                Text(
+                    text = application.jobUrl,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    fontWeight = FontWeight.Light,
+                    fontStyle = FontStyle.Italic,
                     fontSize = 13.sp,
-                    color = Color.White,
+                    color = Color.Blue,
                     modifier = Modifier.padding(2.dp)
                 )
                 Text(
-                    text = "Position : ${application.jobPosition}",
+                    text = "Notes:",
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 13.sp,
-                    color = Color.White,
-                    modifier = Modifier.padding(2.dp)
+                    fontSize = 15.sp,
+                    color = Color.Yellow,
+                    modifier = Modifier.padding(2.dp).padding(top=5.dp)
                 )
+
                 Text(
-                    text = "URL : ${application.jobUrl}",
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 13.sp,
-                    color = Color.White,
-                    modifier = Modifier.padding(2.dp)
-                )
-                Text(
-                    text = "Notes : ${application.notes}",
+                    text = application.notes,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 13.sp,
