@@ -32,8 +32,5 @@ To run AppliTracker locally, follow these simple steps:
 
 4. Explore the features and manage your job applications effectively!
 
-
-
-
 ![](app/src/main/res/drawable/image.jpg)
 
